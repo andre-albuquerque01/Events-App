@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
 Route::apiResource("/user", UserController::class);
+Route::post("/auth",  [AuthController::class, "login"]);
+// Route::post("/auth", [AuthController::class,"login"])->name("auth");
 // Route::delete("/user/{id}", [UserController::class, "destroy"]);
 // Route::get("/user/{id}", [UserController::class, "show"]);
 // Route::get("/user", [UserController::class, "index"])->name("userIndex");
