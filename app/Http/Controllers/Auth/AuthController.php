@@ -15,8 +15,9 @@ class AuthController extends Controller
             $token = $request->user()->createToken('', ['*'], now()->addHours(2))->plainTextToken;
             $user = Auth::user();
             return response()->json(['token' => $token, 'user' => $user->id], 200);;
+        }else{
+            return response()->json(['message'=> 'unauthorization'],403);
         }
-        // return response()->json([''],403);
     }
 
     public function logout(Request $request)
