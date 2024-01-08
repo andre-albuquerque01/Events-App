@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class UserHasEvents extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        "idUser",
+        "idEvents",
+        "valuePay",
+        "qtdTicket",
+        "statusPay",
+        "numberPix",
+        "pathNameFile",
+    ];
 }

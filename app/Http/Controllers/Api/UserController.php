@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Client\Response;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 
 class UserController extends Controller

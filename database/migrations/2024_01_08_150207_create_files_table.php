@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id('idFile');
-            $table->string('name')->nullable(false)->comment('Contem o nome do arquivo');
-            $table->string('pathName')->nullable(false)->comment('Contem o caminho e o nome do arquivo');
+            $table->string('name')->nullable()->comment('Contem o nome do arquivo');
+            $table->string('pathName')->nullable()->comment('Contem o caminho e o nome do arquivo');
             $table->timestamps();
         });
     }
