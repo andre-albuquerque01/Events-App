@@ -15,8 +15,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate();
-        return UserResource::collection($users);
+        try {
+            $users = User::paginate();
+            return UserResource::collection($users);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
     }
 
     /**
@@ -32,12 +36,16 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $data = $request->validated();
-        $data['password'] = bcrypt($request->password);
+        try {
+            $data = $request->validated();
+            $data['password'] = bcrypt($request->password);
 
-        $user = User::create($data);
-        
-        return new UserResource($user);
+            $user = User::create($data);
+
+            return new UserResource($user);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
     /**
@@ -66,15 +74,16 @@ class UserController extends Controller
      */
     public function update(StoreUserRequest $request, string $id)
     {
-        $user = User::findOrFail($id);
-
-        $data = $request->validated();
-        if ($request->password)
-            $data['password'] = bcrypt($request->password);
-
-        $user->update($data);
-
-        return new UserResource($user);
+        try {
+            $user = User::findOrFail($id);
+            $data = $request->validated();
+            if ($request->password)
+                $data['password'] = bcrypt($request->password);
+            $user->update($data);
+            return new UserResource($user);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 401);
+        }
     }
 
     /**
@@ -82,8 +91,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-        return response()->json([], HttpResponse::HTTP_NO_CONTENT);
+        try {
+            User::findOrFail($id)->delete();
+            return response()->json([], HttpResponse::HTTP_NO_CONTENT);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 401);
+        }
     }
 }

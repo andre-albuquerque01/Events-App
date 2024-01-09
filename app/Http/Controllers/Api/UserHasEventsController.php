@@ -4,20 +4,30 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserHasEventRequest;
-use App\Http\Resources\EventsResource;
+use App\Http\Resources\UserHasEventsResource;
+use App\Http\Services\SaveFile;
 use App\Models\UserHasEvents;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserHasEventsController extends Controller
 {
+    protected $saveFile;
+
+    public function __construct(SaveFile $saveFile)
+    {
+        $this->saveFile = $saveFile;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $event = UserHasEvents::join('users', 'users.idUser', '=', 'user_has_events.idUser')->join('events', 'events.idEvents', '=', 'user_has_events.idEvents');/*->where('users.idUser', '=', 'user_has_events.idUser');*/
-        return new EventsResource($event);
+        try {
+            $event = UserHasEvents::join('users', 'users.idUser', '=', 'user_has_events.idUser')->join('events', 'events.idEvents', '=', 'user_has_events.idEvents')->paginate();/*->where('users.idUser', '=', 'user_has_events.idUser');*/
+            return new UserHasEventsResource($event);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
     }
 
     /**
@@ -33,11 +43,20 @@ class UserHasEventsController extends Controller
      */
     public function store(StoreUserHasEventRequest $request)
     {
-        $data = $request->validated();
-        $user = Auth::user();
-        $data['idUser'] = $user;
-        $event = UserHasEvents::create($data);
-        return new EventsResource($event);
+        try {
+            if ($request->hasFile('pathNameFile')) {
+                $data = $request->validated();
+                $user = Auth::user()->id;
+                $image = $this->saveFile->saveImagem($request->pathNameFile);
+                $data['pathNameFile'] = $image;
+                $data['idUser'] = $user;
+                $event = UserHasEvents::create($data);
+                return new UserHasEventsResource($event);
+            }
+            return response()->json([['message' => 'Erro']], 400);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 401);
+        }
     }
 
     /**
@@ -45,7 +64,12 @@ class UserHasEventsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        try {
+            $event = UserHasEvents::findOrFail($id);
+            return new UserHasEventsResource($event);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
     }
 
     /**
@@ -59,9 +83,21 @@ class UserHasEventsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUserHasEventRequest $request, string $id)
     {
-        //
+        try {
+            if ($request->hasFile('pathNameFile')) {
+                $event = UserHasEvents::findOrFail($id);
+                $data = $request->validated();
+                $image = $this->saveFile->saveImagem($request->pathNameFile);
+                $data['pathNameFile'] = $image;
+                $event->update($data);
+                return response()->json(['message' => 'sucess'], 200);
+            }
+            return response()->json([['message' => 'Erro']], 400);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 401);
+        }
     }
 
     /**
@@ -69,6 +105,11 @@ class UserHasEventsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            UserHasEvents::findOrFail($id)->delete();
+            return response()->json(['message' => 'sucess'], 204);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 401);
+        }
     }
 }

@@ -1,13 +1,18 @@
 <?php
 
+use App\Http\Controllers\Api\EventsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Models\UserHasEvents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
 Route::apiResource("/user", UserController::class);
+Route::apiResource("/events", EventsController::class);
+Route::apiResource("/hasEvents", UserHasEvents::class);
 Route::post("/auth",  [AuthController::class, "login"]);
+
 // Route::post("/auth", [AuthController::class,"login"])->name("auth");
 // Route::delete("/user/{id}", [UserController::class, "destroy"]);
 // Route::get("/user/{id}", [UserController::class, "show"]);

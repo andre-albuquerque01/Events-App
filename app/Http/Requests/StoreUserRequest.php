@@ -30,6 +30,7 @@ class StoreUserRequest extends FormRequest
                 "unique:users",
             ],
             "password" => "required|min:6|max:60",
+            "cpf" => "required|min:11|max:11",
         ];
 
         if ($this->method() == "PATCH" || $this->method() == "PUT") {
@@ -40,6 +41,7 @@ class StoreUserRequest extends FormRequest
                 "unique:users,email,{$this->id},id",
             ];
             $rules["password"] = "nullable|min:6|max:60";
+            $rules["cpf"] = "nullable|min:11|max:11";
         }
         return $rules;
     }
