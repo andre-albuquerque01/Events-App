@@ -23,22 +23,22 @@ class StoreEventsRequest extends FormRequest
     {
         $rules = [
             "title" => "required|min:3|max:255",
-            "description" => "required|min:3|max:255",
-            "price" => "required",
-            "department" => "required|min:3|max:255",
-            "occupation" => "required|min:3|max:255",
-            "statusEvent" => "required",
-            "idFile" => "required",
+            // "description" => "required|min:3|max:255",
+            // "price" => "required",
+            // "department" => "required|min:3|max:255",
+            // "occupation" => "required|min:3|max:255",
+            // "statusEvent" => "required",
+            // "pathName" => "required",
         ];
         
         if ($this->method() == "PATCH" || $this->method() == "PUT") {
             $rules["title"] = "nullable|min:1|max:255";
-            $rules["description"] = "nullable|min:1|max:255";
-            $rules["price"] = "nullable";
-            $rules["department"] = "nullable|min:1|max:255";
-            $rules["occupation"] = "nullable|min:1|max:255";
-            $rules["statusEvent"] = "required";
-            $rules["idFile"] = "required";
+            // $rules["description"] = "nullable|min:1|max:255";
+            // $rules["price"] = "nullable";
+            // $rules["department"] = "nullable|min:1|max:255";
+            // $rules["occupation"] = "nullable|min:1|max:255";
+            // $rules["statusEvent"] = "required";
+            // $rules["pathName"] = "required";
         }
         return $rules;
     }

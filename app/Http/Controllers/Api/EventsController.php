@@ -26,7 +26,7 @@ class EventsController extends Controller
     {
         try {
             $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->paginate();
-            return new EventsResource($events);
+            return EventsResource::collection($events);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         }
@@ -43,18 +43,25 @@ class EventsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreEventsRequest $request)
+    public function store(Request $request)
     {
         try {
-            if ($request->hasFile('pathNameFile')) {
-                $data = $request->validated();
+            if ($request->hasFile('pathName')) {
+                $data = $request->all();
                 $pathName = $this->saveFile->saveImagem($request->pathName);
-                $idFile = File::createGetId($pathName);
+                $idFile = File::insertGetId(
+                    [
+                        'pathName' => $pathName,
+                        'updated_at' => now(),
+                        'created_at' => now(),
+                    ]
+                );
+
                 $data['idFile'] = $idFile;
                 Events::create($data);
                 return response()->json(['message' => 'sucess'], 200);
             }
-            return response()->json([['message' => 'Erro']], 400);
+            return response()->json(['message' => 'bad request'], 400);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         }
@@ -67,6 +74,7 @@ class EventsController extends Controller
     {
         try {
             $events = Events::findOrFail($id);
+            // return response()->json(['Events' => $events], 200);
             return new EventsResource($events);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
@@ -84,16 +92,28 @@ class EventsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreEventsRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
         try {
+            // if ($request->hasFile('pathName')) {
             $events = Events::findOrFail($id);
-            $data = $request->validated();
-            $pathName = $this->saveFile->saveImagem($request->pathName);
-            $idFile = File::createGetId($pathName);
-            $data['idFile'] = $idFile;
+            $data = $request->all();
+            if (isset($data['pathName'])) {
+                $pathName = $this->saveFile->saveImagem($request->pathName);
+                $idFile = File::insertGetId(
+                    [
+                        'pathName' => $pathName,
+                        'updated_at' => now(),
+                        'created_at' => now(),
+                    ]
+                );
+                $data['idFile'] = $idFile;
+            }
+
             $events->update($data);
             return response()->json(['message' => 'sucess'], 200);
+            // }
+            // return response()->json(['message' => 'bad request'], 400);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         }

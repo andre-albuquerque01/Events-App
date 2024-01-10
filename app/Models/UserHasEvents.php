@@ -9,6 +9,8 @@ class UserHasEvents extends Model
 {
     use HasFactory;
 
+    protected $table = 'user_has_events';
+    protected $primaryKey = 'idUser_has_events';
     protected $fillable = [
         "idUser",
         "idEvents",

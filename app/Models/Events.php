@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Events extends Model
 {
     use HasFactory;
-
+    protected $table = 'events';
+    protected $primaryKey = 'idEvents';
     protected $fillable = [
         'title',
         'description',
