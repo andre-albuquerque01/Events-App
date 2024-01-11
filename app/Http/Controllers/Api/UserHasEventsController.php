@@ -42,20 +42,20 @@ class UserHasEventsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserHasEventRequest $request)
     {
         try {
-            // if ($request->hasFile('pathNameFile')) {
+            if ($request->hasFile('pathName')) {
                 // $user = Auth::user()->id;
                 $user = 1;
                 $data = $request->all();
-                $pathName = $this->saveFile->saveImagem($request->pathNameFile);
-                $data['pathNameFile'] = $pathName;
+                $pathName = $this->saveFile->saveImagem($request->pathName);
+                $data['pathName'] = $pathName;
                 $data['idUser'] = $user;
                 UserHasEvents::create($data);
                 return response()->json([['message' => 'sucess']], 200);
-            // }
-            // return response()->json([['message' => 'Erro']], 400);
+            }
+            return response()->json([['message' => 'Erro']], 400);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 401);
         }
@@ -85,19 +85,16 @@ class UserHasEventsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUserHasEventRequest $request, string $id)
     {
-        // dd($request->all());
         try {
-            if ($request->hasFile('pathNameFile')) {
-                $event = UserHasEvents::findOrFail($id);
-                $data = $request->validated();
-                $image = $this->saveFile->saveImagem($request->pathNameFile);
-                $data['pathNameFile'] = $image;
-                $event->update($data);
-                return response()->json(['message' => 'sucess'], 200);
+            $data = $request->all();
+            if (isset($request->pathName)) {
+                $image = $this->saveFile->saveImagem($request->pathName);
+                $data['pathName'] = $image;
             }
-            return response()->json([['message' => 'Erro']], 400);
+            UserHasEvents::where('idUser_has_events', $id)->update($data);
+            return response()->json(['message' => 'sucess'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 401);
         }

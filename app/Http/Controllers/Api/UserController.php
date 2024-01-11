@@ -10,6 +10,10 @@ use Illuminate\Http\Response as HttpResponse;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('store');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -39,7 +43,7 @@ class UserController extends Controller
         try {
             $data = $request->validated();
             $data['password'] = bcrypt($request->password);
-
+            $data['role'] = 'user';
             $user = User::create($data);
 
             return new UserResource($user);

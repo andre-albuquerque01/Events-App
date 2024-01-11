@@ -18,6 +18,7 @@ class EventsController extends Controller
     public function __construct(SaveFile $saveFile)
     {
         $this->saveFile = $saveFile;
+        $this->middleware('auth:sanctum')->except(['index', 'show']);
     }
     /**
      * Display a listing of the resource.
@@ -43,8 +44,11 @@ class EventsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreEventsRequest $request)
     {
+        if (!auth()->user()->tokenCan("admin")) {
+            return response()->json(['message' => "unauthorization"], 401);
+        }
         try {
             if ($request->hasFile('pathName')) {
                 $data = $request->all();
@@ -92,28 +96,26 @@ class EventsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreEventsRequest $request, string $id)
     {
+        if (!auth()->user()->tokenCan("admin")) {
+            return response()->json(['message' => "unauthorization"], 401);
+        }
         try {
-            // if ($request->hasFile('pathName')) {
             $events = Events::findOrFail($id);
             $data = $request->all();
             if (isset($data['pathName'])) {
                 $pathName = $this->saveFile->saveImagem($request->pathName);
-                $idFile = File::insertGetId(
+                File::where('idFile', $events->idFile)->update(
                     [
                         'pathName' => $pathName,
                         'updated_at' => now(),
-                        'created_at' => now(),
                     ]
                 );
-                $data['idFile'] = $idFile;
             }
 
             $events->update($data);
             return response()->json(['message' => 'sucess'], 200);
-            // }
-            // return response()->json(['message' => 'bad request'], 400);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         }
@@ -124,6 +126,9 @@ class EventsController extends Controller
      */
     public function destroy(string $id)
     {
+        if (!auth()->user()->tokenCan("admin")) {
+            return response()->json(['message' => "unauthorization"], 401);
+        }
         try {
             Events::findOrFail($id)->delete();
         } catch (\Exception $e) {

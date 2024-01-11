@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('qtdTicket')->comment('Contem a quantidade de ingressos');
             $table->boolean('statusPay')->comment('Contem o status de pagamento do usuario');
             $table->string('numberPix')->comment('Contem o numero do pix, qr code');
-            $table->string('pathNameFile')->comment('Contem o caminho da imagem que será reenvio do usuário');
+            $table->string('pathName')->comment('Contem o caminho da imagem que será reenvio do usuário');
 
             $table->unsignedBigInteger('idUser')->comment('Contem a chave estrangeira do user');
             $table->foreign('idUser')->references('idUser')->on('users')->onDelete('cascade')->onUpdate('cascade');

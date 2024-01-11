@@ -9,10 +9,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::apiResource("/user", UserController::class);
-Route::apiResource("/events", EventsController::class);
-Route::apiResource("/hasEvents", UserHasEventsController::class);
 Route::post("/auth",  [AuthController::class, "login"]);
+
+Route::apiResource("/user", UserController::class);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource("/events", EventsController::class);
+    Route::apiResource("/hasEvents", UserHasEventsController::class);
+    Route::post("/events/{id}", [EventsController::class, "update"]);
+    Route::post("/hasEvents/{id}", [UserHasEventsController::class, "update"]);
+});
 
 // Route::post("/auth", [AuthController::class,"login"])->name("auth");
 // Route::delete("/user/{id}", [UserController::class, "destroy"]);

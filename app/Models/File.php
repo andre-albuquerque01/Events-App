@@ -10,6 +10,7 @@ class File extends Model
     use HasFactory;
 
     protected $table = "files";
+    protected $primary = "idFile";
     protected $fillable = [
         'pathName',
     ];

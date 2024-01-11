@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,11 +18,18 @@ class EventsFactory extends Factory
      */
     public function definition(): array
     {
+        $ids = File::pluck('id');
+        $randomId = $ids[array_rand($ids)];
+
         return [
             'title' => fake()->name(),
-            'descrip' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            '' => Str::random(10),
+            'description' => fake()->text(50),
+            'price' => random_int(1, 100),
+            'department' => fake()->text(20),
+            'occupation' => random_int(1, 100),
+            'statusEvent' => random_int(0, 1),
+            'idFile' => $randomId,
+            // '' => Str::random(10),
         ];
     }
 }
