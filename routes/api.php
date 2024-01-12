@@ -4,14 +4,15 @@ use App\Http\Controllers\Api\EventsController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\UserHasEventsController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Models\UserHasEvents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
 Route::post("/auth",  [AuthController::class, "login"]);
-
 Route::apiResource("/user", UserController::class);
+Route::get("/verifyEmail/{email}",  [UserController::class, "verifyEmail"]);
+Route::post("/verifyPassword",  [UserController::class, "verifyPassword"]);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/events", EventsController::class);
     Route::apiResource("/hasEvents", UserHasEventsController::class);
