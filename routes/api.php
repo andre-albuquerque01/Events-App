@@ -17,6 +17,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/hasEvents", UserHasEventsController::class);
     Route::post("/events/{id}", [EventsController::class, "update"]);
     Route::post("/hasEvents/{id}", [UserHasEventsController::class, "update"]);
+    Route::post("/logout",  [AuthController::class, "logout"]);
 });
 
 // Route::post("/auth", [AuthController::class,"login"])->name("auth");
