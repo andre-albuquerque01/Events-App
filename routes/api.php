@@ -12,6 +12,7 @@ Route::post("/auth",  [AuthController::class, "login"]);
 Route::apiResource("/user", UserController::class);
 Route::get("/verifyEmail/{email}",  [UserController::class, "verifyEmail"]);
 Route::post("/verifyPassword",  [UserController::class, "verifyPassword"]);
+Route::post("/updatePassword",  [UserController::class, "updatePassword"]);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/events", EventsController::class);
