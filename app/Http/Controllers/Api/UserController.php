@@ -138,6 +138,17 @@ class UserController extends Controller
 
     public function updatePassword(Request $request)
     {
+        try {
+            $user = User::where('email', $request->email)->first();
+            if ($user !== null) {
+                User::where('email', $request->email)->update([
+                    'password' => bcrypt($request->password)
+                ]);
+                return response()->json(['message' => 'Senha alterada'], 200);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
     /**
