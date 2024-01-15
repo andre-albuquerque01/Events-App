@@ -11,8 +11,10 @@ use Illuminate\Support\Facades\Route;
 Route::post("/auth",  [AuthController::class, "login"]);
 Route::apiResource("/user", UserController::class);
 Route::get("/verifyEmail/{email}",  [UserController::class, "verifyEmail"]);
-Route::post("/verifyPassword",  [UserController::class, "verifyPassword"]);
-Route::post("/updatePassword",  [UserController::class, "updatePassword"]);
+
+Route::post("/sendTokenRecoverPassword",  [UserController::class, "sendTokenRecoverPassword"]);
+Route::post("/verifyTokenRecover",  [UserController::class, "verifyTokenRecover"]);
+Route::post("/updatePassword/{token}",  [UserController::class, "updatePassword"]);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/events", EventsController::class);
@@ -22,17 +24,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("/logout",  [AuthController::class, "logout"]);
 });
 
-// Route::post("/auth", [AuthController::class,"login"])->name("auth");
-// Route::delete("/user/{id}", [UserController::class, "destroy"]);
-// Route::get("/user/{id}", [UserController::class, "show"]);
-// Route::get("/user", [UserController::class, "index"])->name("userIndex");
-// Route::patch("/user/{id}", [UserController::class,"update"])->name("");
-// Route::post("/user", [UserController::class,"store"])->name("userStore");
-
-
 Route::get("/", function (Request $request) {
     return response()->json([
-        'sucess' => 'true'
+        'Hi!' => 'I am here! Use me, please.'
     ]);
 });
 

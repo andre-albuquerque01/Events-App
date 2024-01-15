@@ -53,13 +53,16 @@
 
     <div class="container">
         <h2>Olá,</h2>
-        <p>Recebemos uma solicitação para recuperação de senha associada à sua conta.</p>
+        <p>Recebemos uma solicitação para recuperação de senha associada à sua conta. Para continuar o processo de
+            recuperação, clique no botão abaixo:</p>
 
-        <h3>
-            {{ $data['message'] }}"
-        </h3>
+        <p>Seu token para recuperação de senha</p>
+        <h2>{{ $data['message'] }}</h2>
 
-        <p>Essa é a sua nova senha, solicitamos que altere ela quando entrar.</p>
+        <a href="http://localhost/api/resetPassword">Recuperar Senha</a>
+
+        <p>Este link de recuperação é válido por {{ $data['expiration_hours'] }}. Após este período, será
+            necessário solicitar uma nova recuperação de senha.</p>
 
         <p>Se você não solicitou a recuperação de senha, pode ignorar este e-mail.</p>
 

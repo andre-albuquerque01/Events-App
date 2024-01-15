@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AuthResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,6 +13,13 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         try {
+            $userAut = User::where('email', $request->email)->first();
+            if (!$userAut) {
+                return response()->json(['message' => 'Usuário não encontrado'], 400);
+            }
+            if ($userAut->email_verified_at == null) {
+                return response()->json(['message' => 'E-mail não verificado'], 400);
+            }
             if (Auth::attempt($request->only("email", "password"))) {
                 $user = Auth::user();
                 $scopes = ($user->role == "admin") ? ['admin'] : ['user'];
