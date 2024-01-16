@@ -22,22 +22,20 @@ class StoreUserHasEventRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            "idUser" => "required",
             "idEvents" => "required",
             "valuePay" => "nullable",
             "qtdTicket" => "required|min:1|max:10",
             "statusPay" => "required",
             "numberPix" => "required",
-            "pathNameFile" => "required",
+            "pathName" => "required",
         ];
 
         if ($this->method() == "PATCH" || $this->method() == "PUT") {
-            $rules["idUser"] = "nullable";
-            $rules["idEvents"] = "nullable";
+            $rules["idEvents"] = "required";
             $rules["qtdTicket"] = "nullable";
             $rules["statusPay"] = "nullable";
             $rules["numberPix"] = "nullable";
-            $rules["pathNameFile"] = "nullable";
+            $rules["pathName"] = "nullable";
         }
         return $rules;
     }

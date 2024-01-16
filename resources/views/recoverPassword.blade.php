@@ -56,7 +56,7 @@
         <p>Recebemos uma solicitação para recuperação de senha associada à sua conta. Para continuar o processo de
             recuperação, clique no botão abaixo:</p>
 
-        <p>Seu token para recuperação de senha</p>
+        <p>Seu token para recuperação de senha é:</p>
         <h2>{{ $data['message'] }}</h2>
 
         <a href="http://localhost/api/resetPassword">Recuperar Senha</a>

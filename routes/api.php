@@ -14,11 +14,12 @@ Route::get("/verifyEmail/{email}",  [UserController::class, "verifyEmail"]);
 
 Route::post("/sendTokenRecoverPassword",  [UserController::class, "sendTokenRecoverPassword"]);
 Route::post("/verifyTokenRecover",  [UserController::class, "verifyTokenRecover"]);
-Route::post("/updatePassword/{token}",  [UserController::class, "updatePassword"]);
+Route::put("/updatePassword/{token}",  [UserController::class, "updatePassword"]);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/events", EventsController::class);
     Route::apiResource("/hasEvents", UserHasEventsController::class);
+    // Route::post("/hasEvents", [UserHasEventsController::class, 'store']);
     Route::post("/events/{id}", [EventsController::class, "update"]);
     Route::post("/hasEvents/{id}", [UserHasEventsController::class, "update"]);
     Route::post("/logout",  [AuthController::class, "logout"]);

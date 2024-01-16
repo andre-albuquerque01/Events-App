@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Password;
 
-class StoreUserRequest extends FormRequest
+class UpdatePasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,7 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            "name" => "required|min:3|max:255",
-            "email" => [
-                "required",
-                "email",
-                "max:255",
-                "unique:users",
-            ],
-            "password" => [
+            'password' => [
                 'required',
                 'confirmed',
                 Password::min(8)
@@ -40,7 +33,7 @@ class StoreUserRequest extends FormRequest
                     ->symbols()
                     ->uncompromised(),
             ],
-            "password_confirmation" => [
+            'password_confirmation' => [
                 'required',
                 Password::min(8)
                     ->mixedCase()
@@ -49,28 +42,7 @@ class StoreUserRequest extends FormRequest
                     ->symbols()
                     ->uncompromised(),
             ],
-            "cpf" => "required|min:11|max:11",
         ];
-
-        if ($this->method() == "PATCH" || $this->method() == "PUT") {
-            $rules["email"] = [
-                "required",
-                "email",
-                "max:255",
-                "unique:users,email,{$this->id},id",
-            ];
-            $rules["password"] = [
-                'required',
-                'confirmed',
-                Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised(),
-            ];
-            $rules["cpf"] = "nullable|min:11|max:11";
-        }
         return $rules;
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserHasEventRequest;
 use App\Http\Resources\UserHasEventsResource;
 use App\Http\Services\SaveFile;
+use App\Models\User;
 use App\Models\UserHasEvents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,12 +47,17 @@ class UserHasEventsController extends Controller
     {
         try {
             if ($request->hasFile('pathName')) {
-                // $user = Auth::user()->id;
-                $user = 1;
-                $data = $request->all();
+                $user = Auth::user();
+                $data = $request->validated();
                 $pathName = $this->saveFile->saveImagem($request->pathName);
                 $data['pathName'] = $pathName;
-                $data['idUser'] = $user;
+                $data['idUser'] = $user->idUser;
+
+                $userExists = User::find($user->idUser);
+                if (!$userExists) {
+                    throw new \Exception("Usuário não encontrado");
+                }
+
                 UserHasEvents::create($data);
                 return response()->json([['message' => 'sucess']], 200);
             }
@@ -88,7 +94,7 @@ class UserHasEventsController extends Controller
     public function update(StoreUserHasEventRequest $request, string $id)
     {
         try {
-            $data = $request->all();
+            $data = $request->validated();
             if (isset($request->pathName)) {
                 $image = $this->saveFile->saveImagem($request->pathName);
                 $data['pathName'] = $image;
