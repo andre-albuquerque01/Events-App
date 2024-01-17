@@ -27,6 +27,7 @@ class StoreEventsRequest extends FormRequest
             "price" => "required",
             "department" => "required|min:3|max:255",
             "occupation" => "required|min:3|max:255",
+            "dateEvent" => "required|date",
             "statusEvent" => "required",
             "pathName" => "required",
         ];
@@ -38,6 +39,7 @@ class StoreEventsRequest extends FormRequest
             $rules["department"] = "nullable|min:1|max:255";
             $rules["occupation"] = "nullable|min:1|max:255";
             $rules["statusEvent"] = "nullable";
+            $rules["dateEvent"] = "nullable|date";
             $rules["pathName"] = "nullable";
         }
         return $rules;

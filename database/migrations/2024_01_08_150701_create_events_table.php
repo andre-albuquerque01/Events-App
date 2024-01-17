@@ -18,6 +18,7 @@ return new class extends Migration
             $table->double('price')->nullable()->comment('Contem o preco do evento');
             $table->string('department')->nullable()->comment('Contem o departamento que esta envolvido com o evento');
             $table->string('occupation')->nullable()->comment('Contem a ocupacao do local');
+            $table->date('dateEvent')->nullable()->comment('Contem a data do evento');
             $table->boolean('statusEvent')->nullable(true)->comment('Contem o status do evento, se esta ativo ou nao');
             $table->unsignedBigInteger('idFile')->nullable()->comment('Contem o id da tabela das imagens');
             $table->foreign('idFile')->references('idFile')->on('files')->onDelete('cascade')->onUpdate('cascade');
