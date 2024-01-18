@@ -16,10 +16,10 @@ Route::post("/sendTokenRecoverPassword",  [UserController::class, "sendTokenReco
 Route::post("/verifyTokenRecover",  [UserController::class, "verifyTokenRecover"]);
 Route::put("/updatePassword/{token}",  [UserController::class, "updatePassword"]);
 
+Route::apiResource("/events", EventsController::class);
+
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource("/events", EventsController::class);
     Route::apiResource("/hasEvents", UserHasEventsController::class);
-    // Route::post("/hasEvents", [UserHasEventsController::class, 'store']);
     Route::post("/events/{id}", [EventsController::class, "update"]);
     Route::post("/hasEvents/{id}", [UserHasEventsController::class, "update"]);
     Route::post("/logout",  [AuthController::class, "logout"]);
