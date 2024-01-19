@@ -77,8 +77,7 @@ class EventsController extends Controller
     public function show(string $id)
     {
         try {
-            $events = Events::findOrFail($id);
-            // return response()->json(['Events' => $events], 200);
+            $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->where('idEvents', $id)->first();
             return new EventsResource($events);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);

@@ -14,4 +14,9 @@ class File extends Model
     protected $fillable = [
         'pathName',
     ];
+
+    public function events()
+    {
+        return $this->belongsTo(Events::class);
+    }
 }

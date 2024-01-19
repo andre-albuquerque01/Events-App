@@ -19,4 +19,8 @@ class Events extends Model
         'statusEvent',
         'idFile'
     ];
+    public function file()
+    {
+        return $this->hasOne(File::class, 'idFile', 'idFile');
+    }
 }
