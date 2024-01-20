@@ -17,6 +17,7 @@ Route::post("/verifyTokenRecover",  [UserController::class, "verifyTokenRecover"
 Route::put("/updatePassword/{token}",  [UserController::class, "updatePassword"]);
 
 Route::apiResource("/events", EventsController::class);
+Route::get("/eventsTitle/{title}",  [EventsController::class, "showTitle"]);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/hasEvents", UserHasEventsController::class);

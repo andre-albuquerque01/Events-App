@@ -18,7 +18,7 @@ class EventsController extends Controller
     public function __construct(SaveFile $saveFile)
     {
         $this->saveFile = $saveFile;
-        $this->middleware('auth:sanctum')->except(['index', 'show']);
+        $this->middleware('auth:sanctum')->except(['index', 'show', 'showTitle']);
     }
     /**
      * Display a listing of the resource.
@@ -78,6 +78,16 @@ class EventsController extends Controller
     {
         try {
             $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->where('idEvents', $id)->first();
+            return new EventsResource($events);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 404);
+        }
+    }
+
+    public function showTitle(string $title)
+    {
+        try {
+            $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->where('title', $title)->first();
             return new EventsResource($events);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
