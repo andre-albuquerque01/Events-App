@@ -93,12 +93,26 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function reSendToken(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'email' => [
+                    "required",
+                    "email",
+                    "max:255",
+                    "unique:users,email",
+                ]
+            ]);
+            Mail::to($request->email)->send(new VerifyEmail([
+                'toEmail' => $request->email,
+                'subject' => 'Verificar e-mail',
+                'message' =>  Crypt::encryptString($request->email)
+            ]));
+            return response()->json(['message' => 'E-mail went send'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
     /**
