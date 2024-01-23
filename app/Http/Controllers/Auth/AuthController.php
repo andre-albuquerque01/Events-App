@@ -15,7 +15,7 @@ class AuthController extends Controller
         try {
             $userAut = User::where('email', $request->email)->first();
             if (!$userAut) {
-                return response()->json(['message' => 'Usuário não encontrado'], 400);
+                return response()->json(['message' => 'Usuário ou senha invalida'], 400);
             }
             if ($userAut->email_verified_at == null) {
                 return response()->json(['message' => 'E-mail não verificado'], 400);
