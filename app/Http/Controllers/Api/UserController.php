@@ -60,13 +60,13 @@ class UserController extends Controller
             $data = $request->validated();
             $data['password'] = bcrypt($request->password);
             $data['role'] = 'user';
-            $user = User::create($data);
+            User::create($data);
             Mail::to($request->email)->send(new VerifyEmail([
                 'toEmail' => $request->email,
                 'subject' => 'Verificar e-mail',
                 'message' =>  Crypt::encryptString($request->email)
             ]));
-            return new UserResource($user);
+            return response()->json(['message' => 'sucess'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }

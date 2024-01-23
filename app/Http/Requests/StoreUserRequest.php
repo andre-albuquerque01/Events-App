@@ -49,7 +49,12 @@ class StoreUserRequest extends FormRequest
                     ->symbols()
                     ->uncompromised(),
             ],
-            "cpf" => "required|min:11|max:11",
+            "cpf" => [
+                "required",
+                "min:11",
+                "max:11",
+                "unique",
+            ],
         ];
 
         if ($this->method() == "PATCH" || $this->method() == "PUT") {
