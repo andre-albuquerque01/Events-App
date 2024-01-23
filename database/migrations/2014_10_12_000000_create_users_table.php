@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('cpf')->unique();
             $table->string('role')->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('term_aceite')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

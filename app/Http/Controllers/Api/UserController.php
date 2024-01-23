@@ -21,7 +21,7 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('store', 'verifyEmail', 'updatePassword', 'sendTokenRecoverPassword', 'verifyTokenRecover');
+        $this->middleware('auth:sanctum')->only('show', 'update', 'destroy');
     }
     /**
      * Display a listing of the resource.
@@ -34,14 +34,6 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
