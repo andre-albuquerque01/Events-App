@@ -52,6 +52,7 @@ class EventsController extends Controller
         try {
             if ($request->hasFile('pathName')) {
                 $data = $request->all();
+                $data['statusEvent'] = 1;
                 $pathName = $this->saveFile->saveImagem($request->pathName);
                 $idFile = File::insertGetId(
                     [
