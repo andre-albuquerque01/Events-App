@@ -114,7 +114,6 @@ class UserController extends Controller
     public function update(StoreUserRequest $request, string $id)
     {
         try {
-            $desId = Crypt::decryptString($id);
             $user = User::findOrFail($id);
             $data = $request->validated();
             if (Hash::check($request->password, $user->password)) {
@@ -220,8 +219,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         try {
-            $desId = Crypt::decryptString($id);
-            User::findOrFail($desId)->delete();
+            User::findOrFail($id)->delete();
             return response()->json([], HttpResponse::HTTP_NO_CONTENT);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 401);
