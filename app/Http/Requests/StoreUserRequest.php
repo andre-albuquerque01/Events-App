@@ -66,7 +66,6 @@ class StoreUserRequest extends FormRequest
             ];
             $rules["password"] = [
                 'required',
-                'confirmed',
                 Password::min(8)
                     ->mixedCase()
                     ->letters()
