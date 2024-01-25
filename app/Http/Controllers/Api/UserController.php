@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -113,9 +114,10 @@ class UserController extends Controller
     public function update(StoreUserRequest $request, string $id)
     {
         try {
+            $desId = Crypt::decryptString($id);
             $user = User::findOrFail($id);
             $data = $request->validated();
-            if (bcrypt($request->password) == $user->password) {
+            if (Hash::check($request->password, $user->password)) {
                 $data['password'] = bcrypt($request->password);
                 $user->update($data);
                 return new UserResource($user);
@@ -218,7 +220,8 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         try {
-            User::findOrFail($id)->delete();
+            $desId = Crypt::decryptString($id);
+            User::findOrFail($desId)->delete();
             return response()->json([], HttpResponse::HTTP_NO_CONTENT);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 401);

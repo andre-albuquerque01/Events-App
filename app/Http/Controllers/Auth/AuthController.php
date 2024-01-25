@@ -7,6 +7,7 @@ use App\Http\Resources\AuthResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 class AuthController extends Controller
 {
@@ -24,7 +25,9 @@ class AuthController extends Controller
                 $user = Auth::user();
                 $scopes = ($user->role == "admin") ? ['admin'] : ['user'];
                 $token = $request->user()->createToken('user', $scopes, now()->addHours(2))->plainTextToken;
-                return new AuthResource(['idUser' => $user->idUser, 'token' => $token]);
+                if($user->role == 'user') $role = 'u';
+                elseif($user->role == 'admin') $role = 'a';
+                return new AuthResource(['idUser' => $user->idUser, 'token' => $token, 'r' => $role]);
             }
             return response()->json(['message' => 'unauthorization'], 403);
         } catch (\Exception $e) {
