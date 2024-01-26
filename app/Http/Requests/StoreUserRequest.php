@@ -59,21 +59,29 @@ class StoreUserRequest extends FormRequest
 
         if ($this->method() == "PATCH" || $this->method() == "PUT") {
             $rules["email"] = [
-                "required",
+                "nullable",
                 "email",
                 "max:255",
-                "unique:users,email,{$this->id},id",
+                // "unique:users,email,{$this->idUser},idUser",
             ];
             $rules["password"] = [
                 'required',
                 Password::min(8)
-                    ->mixedCase()
-                    ->letters()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised(),
+                ->mixedCase()
+                ->letters()
+                ->numbers()
+                ->symbols()
+                ->uncompromised(),
             ];
-            $rules["cpf"] = "nullable|min:11|max:11";
+            $rules["password_confirmation"] = [
+                'nullable',
+            ];
+            $rules["cpf"] = [
+                'nullable',
+                'min:11',
+                'max:11',
+                // "unique:users,cpf,{$this->idUser},idUser",
+            ];
         }
         return $rules;
     }

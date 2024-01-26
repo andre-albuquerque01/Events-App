@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 use App\Mail\RecoverPassword;
 use App\Mail\VerifyEmail;
@@ -115,11 +116,11 @@ class UserController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-            $data = $request->validated();
+            $data = $request->all();
             if (Hash::check($request->password, $user->password)) {
                 $data['password'] = bcrypt($request->password);
                 $user->update($data);
-                return new UserResource($user);
+                return response()->json(['message' => 'sucess'], 200);
             }
             return response()->json(['message' => 'error'], 400);
         } catch (\Exception $e) {
