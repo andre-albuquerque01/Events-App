@@ -21,7 +21,7 @@ class AuthController extends Controller
             if ($userAut->email_verified_at == null) {
                 return response()->json(['message' => 'E-mail não verificado'], 400);
             }
-            if (Auth::attempt($request->only("email", "password"))) {
+            if (Auth::attempt($request->only("email", "password")) && $userAut->role !== '') {
                 $user = Auth::user();
                 $scopes = ($user->role == "admin") ? ['admin'] : ['user'];
                 $token = $request->user()->createToken('user', $scopes, now()->addHours(2))->plainTextToken;
