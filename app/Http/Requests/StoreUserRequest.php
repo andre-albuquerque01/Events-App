@@ -53,7 +53,7 @@ class StoreUserRequest extends FormRequest
                 "required",
                 "min:11",
                 "max:11",
-                "unique",
+                // "unique",
             ],
         ];
 

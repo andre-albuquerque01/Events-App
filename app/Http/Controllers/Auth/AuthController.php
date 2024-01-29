@@ -26,7 +26,7 @@ class AuthController extends Controller
                 $scopes = ($user->role == "admin") ? ['admin'] : ['user'];
                 $token = $request->user()->createToken('user', $scopes, now()->addHours(2))->plainTextToken;
                 if($user->role == 'user') $role = 'u';
-                elseif($user->role == 'admin') $role = 'a';
+                elseif($user->role == 'admin') $role = 'JesusIsKingADM';
                 return new AuthResource(['idUser' => $user->idUser, 'token' => $token, 'r' => $role]);
             }
             return response()->json(['message' => 'unauthorization'], 403);

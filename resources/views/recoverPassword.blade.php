@@ -59,7 +59,7 @@
         <p>Seu token para recuperação de senha é:</p>
         <h2>{{ $data['message'] }}</h2>
 
-        <a href="http://localhost/api/resetPassword">Recuperar Senha</a>
+        <a href="http://localhost:3000/user/recover/verifyToken">Recuperar Senha</a>
 
         <p>Este link de recuperação é válido por {{ $data['expiration_hours'] }}. Após este período, será
             necessário solicitar uma nova recuperação de senha.</p>
