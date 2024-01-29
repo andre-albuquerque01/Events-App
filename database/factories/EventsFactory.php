@@ -20,15 +20,17 @@ class EventsFactory extends Factory
     {
         $ids = File::pluck('id');
         $randomId = $ids[array_rand($ids)];
-
         return [
             'title' => fake()->name(),
             'description' => fake()->text(50),
             'price' => random_int(1, 100),
+            'qtdParcelamento' => random_int(1, 100),
             'department' => fake()->text(20),
+            'dateEvent' => fake()->date(),
+            'timeEvent' => fake()->time(),
             'occupation' => random_int(1, 100),
             'statusEvent' => random_int(0, 1),
-            'idFile' => $randomId,
+            'idFile' => random_int(1, 19),
             // '' => Str::random(10),
         ];
     }
