@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEventsRequest;
 use App\Http\Resources\EventsResource;
+use App\Http\Resources\EventsTitleResource;
 use App\Http\Services\SaveFile;
 use App\Models\Events;
 use App\Models\File;
@@ -88,8 +89,8 @@ class EventsController extends Controller
     public function showTitle(string $title)
     {
         try {
-            $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->where('title', $title)->first();
-            return new EventsResource($events);
+            $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->where('title', 'LIKE', '%' . $title . '%')->get();
+            return new EventsTitleResource($events);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         }
