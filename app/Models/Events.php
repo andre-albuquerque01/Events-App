@@ -16,6 +16,9 @@ class Events extends Model
         'price',
         'department',
         'occupation',
+        'qtdParcelamento',
+        'dateEvent',
+        'timeEvent',
         'statusEvent',
         'idFile'
     ];

@@ -51,25 +51,23 @@ class EventsController extends Controller
             return response()->json(['message' => "unauthorization"], 401);
         }
         try {
-            if ($request->hasFile('pathName')) {
-                $data = $request->all();
-                $data['statusEvent'] = 1;
-                $pathName = $this->saveFile->saveImagem($request->pathName);
-                $idFile = File::insertGetId(
-                    [
-                        'pathName' => $pathName,
-                        'updated_at' => now(),
-                        'created_at' => now(),
-                    ]
-                );
+            $data = $request->validated();
+            $data['statusEvent'] = 1;
+            // $pathName = $this->saveFile->saveImagem($request->pathName);
+            $idFile = File::insertGetId(
+                [
+                    // 'pathName' => $pathName,
+                    'pathName' => $request->pathName,
+                    'updated_at' => now(),
+                    'created_at' => now(),
+                ]
+            );
 
-                $data['idFile'] = $idFile;
-                Events::create($data);
-                return response()->json(['message' => 'sucess'], 200);
-            }
-            return response()->json(['message' => 'bad request'], 400);
+            $data['idFile'] = $idFile;
+            Events::create($data);
+            return response()->json(['message' => 'sucess'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 

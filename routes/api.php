@@ -23,6 +23,7 @@ Route::get("/eventsTitle/{title}",  [EventsController::class, "showTitle"]);
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource("/hasEvents", UserHasEventsController::class);
     Route::post("/events/{id}", [EventsController::class, "update"]);
+    Route::delete("/delete/events/{id}", [EventsController::class, "destroy"]);
     Route::post("/hasEvents/{id}", [UserHasEventsController::class, "update"]);
     Route::post("/logout",  [AuthController::class, "logout"]);
 });

@@ -23,12 +23,13 @@ class StoreEventsRequest extends FormRequest
     {
         $rules = [
             "title" => "required|min:3|max:255",
-            "description" => "required|min:3|max:255",
+            "description" => "required|min:2|max:255",
             "price" => "required",
-            "department" => "required|min:3|max:255",
-            "occupation" => "required|min:3|max:255",
-            "dateEvent" => "required|date",
-            "statusEvent" => "required",
+            "qtdParcelamento" => "required",
+            "department" => "required|min:2|max:255",
+            "occupation" => "required|min:1|max:255",
+            "dateEvent" => "required",
+            "timeEvent" => "required",
             "pathName" => "required",
         ];
         
