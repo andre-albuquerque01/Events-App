@@ -21,12 +21,13 @@ class AuthController extends Controller
             if ($userAut->email_verified_at == null) {
                 return response()->json(['message' => 'E-mail não verificado'], 400);
             }
-            if (Auth::attempt($request->only("email", "password")) && $userAut->role !== '') {
+            if (Auth::attempt($request->only("email", "password"))) {
                 $user = Auth::user();
                 $scopes = ($user->role == "admin") ? ['admin'] : ['user'];
                 $token = $request->user()->createToken('user', $scopes, now()->addHours(2))->plainTextToken;
                 if($user->role == 'user') $role = 'u';
                 elseif($user->role == 'admin') $role = 'JesusIsKingADM';
+                else $role = '';
                 return new AuthResource(['idUser' => $user->idUser, 'token' => $token, 'r' => $role]);
             }
             return response()->json(['message' => 'unauthorization'], 403);
