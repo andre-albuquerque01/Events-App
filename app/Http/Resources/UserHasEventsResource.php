@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,15 +15,14 @@ class UserHasEventsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
-        // return [
-        //     'id' => $this->id,
-        //     'name' => $this->name,
-        //     'email' => $this->email,
-        //     'title' => $this->title,
-        //     'departament' => $this->departament,
-        //     'occupation' => $this->occupation,
-        //     'created' => Carbon::make($this->created_at)->format('Y-m-d H:i:s'),
-        // ];
+        // return parent::toArray($request);
+        return [
+            'id' => $this->idEvents,
+            'title' => $this->title,
+            'price' => $this->price,
+            'statusEvent' => $this->statusEvent,
+            'pathName' => $this->pathName,
+            'created' => Carbon::make($this->created_at)->format('Y-m-d H:i:s'),
+        ];
     }
 }

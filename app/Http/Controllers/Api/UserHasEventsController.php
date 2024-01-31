@@ -25,19 +25,12 @@ class UserHasEventsController extends Controller
     public function index()
     {
         try {
-            $event = UserHasEvents::join('users', 'users.idUser', '=', 'user_has_events.idUser')->join('events', 'events.idEvents', '=', 'user_has_events.idEvents')->where('users.idUser', '=', 'user_has_events.idUser')->paginate();
-            return new UserHasEventsResource($event);
+            $user = Auth::user();
+            $event = UserHasEvents::join('users', 'users.idUser', '=', 'user_has_events.idUser')->join('events', 'events.idEvents', '=', 'user_has_events.idEvents')->join('files', 'events.idFile', '=', 'files.idFile')->where( 'user_has_events.idUser', '=', $user->idUser)->paginate();
+            return UserHasEventsResource::collection($event);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
         }
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -46,11 +39,8 @@ class UserHasEventsController extends Controller
     public function store(StoreUserHasEventRequest $request)
     {
         try {
-            if ($request->hasFile('pathName')) {
                 $user = Auth::user();
                 $data = $request->validated();
-                $pathName = $this->saveFile->saveImagem($request->pathName);
-                $data['pathName'] = $pathName;
                 $data['idUser'] = $user->idUser;
 
                 $userExists = User::find($user->idUser);
@@ -60,8 +50,6 @@ class UserHasEventsController extends Controller
 
                 UserHasEvents::create($data);
                 return response()->json([['message' => 'sucess']], 200);
-            }
-            return response()->json([['message' => 'Erro']], 400);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 401);
         }
@@ -81,14 +69,6 @@ class UserHasEventsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(StoreUserHasEventRequest $request, string $id)
@@ -96,8 +76,8 @@ class UserHasEventsController extends Controller
         try {
             $data = $request->validated();
             if (isset($request->pathName)) {
-                $image = $this->saveFile->saveImagem($request->pathName);
-                $data['pathName'] = $image;
+                // $image = $this->saveFile->saveImagem($request->pathName);
+                $data['pathName'] = $request->pathName;
             }
             UserHasEvents::where('idUser_has_events', $id)->update($data);
             return response()->json(['message' => 'sucess'], 200);

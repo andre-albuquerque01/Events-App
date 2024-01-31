@@ -23,11 +23,6 @@ class StoreUserHasEventRequest extends FormRequest
     {
         $rules = [
             "idEvents" => "required",
-            "valuePay" => "nullable",
-            "qtdTicket" => "required|min:1|max:10",
-            "statusPay" => "required",
-            "numberPix" => "required",
-            "pathName" => "required",
         ];
 
         if ($this->method() == "PATCH" || $this->method() == "PUT") {

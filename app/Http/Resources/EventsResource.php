@@ -26,7 +26,6 @@ class EventsResource extends JsonResource
             'dateEvent' => $this->dateEvent,
             'timeEvent' => $this->timeEvent,
             'statusEvent' => $this->statusEvent,
-            'idFile' => $this->idFile,
             'pathName' => $this->pathName,
             'created' => Carbon::make($this->created_at)->format('Y-m-d H:i:s'),
         ];
