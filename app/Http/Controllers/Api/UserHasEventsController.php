@@ -18,15 +18,17 @@ class UserHasEventsController extends Controller
     public function __construct(SaveFile $saveFile)
     {
         $this->saveFile = $saveFile;
+        $this->middleware('auth:sanctum')->only('showUserEvents', 'store', 'show', 'update', 'destroy');
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function showUserEvents()
     {
         try {
             $user = Auth::user();
-            $event = UserHasEvents::join('users', 'users.idUser', '=', 'user_has_events.idUser')->join('events', 'events.idEvents', '=', 'user_has_events.idEvents')->join('files', 'events.idFile', '=', 'files.idFile')->where( 'user_has_events.idUser', '=', $user->idUser)->paginate();
+            $event = UserHasEvents::join('users', 'users.idUser', '=', 'user_has_events.idUser')->join('events', 'events.idEvents', '=', 'user_has_events.idEvents')->join('files', 'events.idFile', '=', 'files.idFile')->where('user_has_events.idUser', '=', $user->idUser)->paginate();
             return UserHasEventsResource::collection($event);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 404);
@@ -39,17 +41,17 @@ class UserHasEventsController extends Controller
     public function store(StoreUserHasEventRequest $request)
     {
         try {
-                $user = Auth::user();
-                $data = $request->validated();
-                $data['idUser'] = $user->idUser;
+            $user = Auth::user();
+            $data = $request->validated();
+            $data['idUser'] = $user->idUser;
 
-                $userExists = User::find($user->idUser);
-                if (!$userExists) {
-                    throw new \Exception("Usuário não encontrado");
-                }
+            $userExists = User::find($user->idUser);
+            if (!$userExists) {
+                throw new \Exception("Usuário não encontrado");
+            }
 
-                UserHasEvents::create($data);
-                return response()->json([['message' => 'sucess']], 200);
+            UserHasEvents::create($data);
+            return response()->json([['message' => 'sucess']], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => $e->getMessage()], 401);
         }
