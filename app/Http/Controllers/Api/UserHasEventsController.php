@@ -31,7 +31,7 @@ class UserHasEventsController extends Controller
             $event = UserHasEvents::join('users', 'users.idUser', '=', 'user_has_events.idUser')->join('events', 'events.idEvents', '=', 'user_has_events.idEvents')->join('files', 'events.idFile', '=', 'files.idFile')->where('user_has_events.idUser', '=', $user->idUser)->paginate();
             return UserHasEventsResource::collection($event);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 
@@ -50,14 +50,13 @@ class UserHasEventsController extends Controller
                 throw new \Exception("Usuário não encontrado");
             }
 
-            if (UserHasEvents::where('idUser', '=', $user->idUser)->where('idEvents', '=', $request->idEvent)->exists()) {
-                throw new \Exception("Usuário já participando do evento");
+            if (UserHasEvents::where('idUser', $user->idUser)->where('idEvents', $request->idEvent)->exists()) {
+                return response()->json(['error' => 'Erro, já participando do mesmo evento'], 400);
             }
-
             UserHasEvents::create($data);
-            return response()->json([['message' => 'sucess']], 200);
+            return response()->json(['message' => 'Cadastro realizado com sucesso'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 401);
+            return response()->json(['error' => $e->getMessage()], 401);
         }
     }
 
@@ -70,7 +69,7 @@ class UserHasEventsController extends Controller
             $event = UserHasEvents::find($id);
             return new UserHasEventsResource($event);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 
@@ -88,7 +87,7 @@ class UserHasEventsController extends Controller
             UserHasEvents::where('idUser_has_events', $id)->update($data);
             return response()->json(['message' => 'sucess'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 401);
+            return response()->json(['error' => $e->getMessage()], 401);
         }
     }
 
@@ -101,7 +100,7 @@ class UserHasEventsController extends Controller
             UserHasEvents::findOrFail($id)->delete();
             return response()->json(['message' => 'sucess'], 204);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 401);
+            return response()->json(['error' => $e->getMessage()], 401);
         }
     }
 }

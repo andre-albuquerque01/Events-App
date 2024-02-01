@@ -30,7 +30,7 @@ class EventsController extends Controller
             $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->paginate();
             return EventsResource::collection($events);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 
@@ -67,7 +67,7 @@ class EventsController extends Controller
             Events::create($data);
             return response()->json(['message' => 'sucess'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
@@ -80,7 +80,7 @@ class EventsController extends Controller
             $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->where('idEvents', $id)->first();
             return new EventsResource($events);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 
@@ -90,7 +90,7 @@ class EventsController extends Controller
             $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->where('title', 'LIKE', '%' . $title . '%')->get();
             return new EventsTitleResource($events);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 
@@ -108,7 +108,7 @@ class EventsController extends Controller
     public function update(StoreEventsRequest $request, string $id)
     {
         if (!auth()->user()->tokenCan("admin")) {
-            return response()->json(['message' => "unauthorization"], 401);
+            return response()->json(['error' => "unauthorization"], 401);
         }
         try {
             $events = Events::findOrFail($id);
@@ -126,7 +126,7 @@ class EventsController extends Controller
             $events->update($data);
             return response()->json(['message' => 'sucess'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 
@@ -136,12 +136,12 @@ class EventsController extends Controller
     public function destroy(string $id)
     {
         if (!auth()->user()->tokenCan("admin")) {
-            return response()->json(['message' => "unauthorization"], 401);
+            return response()->json(['error' => "unauthorization"], 401);
         }
         try {
             Events::findOrFail($id)->delete();
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['errorw' => $e->getMessage()], 404);
         }
     }
 }

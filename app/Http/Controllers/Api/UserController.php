@@ -34,7 +34,7 @@ class UserController extends Controller
             $users = User::paginate();
             return UserResource::collection($users);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 
@@ -49,7 +49,7 @@ class UserController extends Controller
             ]);
             return response()->json(['message' => 'E-mail verificado'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
@@ -70,7 +70,7 @@ class UserController extends Controller
             ]));
             return response()->json(['message' => 'sucess'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
@@ -83,7 +83,7 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             return new UserResource($user);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 404);
+            return response()->json(['error' => $e->getMessage()], 404);
         }
     }
 
@@ -105,7 +105,7 @@ class UserController extends Controller
             ]));
             return response()->json(['message' => 'E-mail went send'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
@@ -122,9 +122,9 @@ class UserController extends Controller
                 $user->update($data);
                 return response()->json(['message' => 'sucess'], 200);
             }
-            return response()->json(['message' => 'error'], 400);
+            return response()->json(['error' => 'error'], 400);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 401);
+            return response()->json(['error' => $e->getMessage()], 401);
         }
     }
 
@@ -147,11 +147,11 @@ class UserController extends Controller
                     ]);
                     return response()->json(['message' => 'sucess'], 200);
                 } else {
-                    return response()->json(['message' => 'Error, token invalido'], 400);
+                    return response()->json(['error' => 'Error, token invalido'], 400);
                 }
             }
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 401);
+            return response()->json(['error' => $e->getMessage()], 401);
         }
     }
 
@@ -185,9 +185,9 @@ class UserController extends Controller
 
                 return response()->json(['message' => 'send e-mail'], 200);
             }
-            return response()->json(['message' => 'E-mail desconhecido'], 400);
+            return response()->json(['error' => 'E-mail desconhecido'], 400);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 401);
+            return response()->json(['error' => $e->getMessage()], 401);
         }
     }
 
@@ -207,10 +207,10 @@ class UserController extends Controller
                     return response()->json(['token' => $tokenCript], 200);
                 }
             } else {
-                return response()->json(['message' => 'Error, token invalido'], 400);
+                return response()->json(['error' => 'Error, token invalido'], 400);
             }
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 401);
+            return response()->json(['error' => $e->getMessage()], 401);
         }
     }
 
@@ -223,7 +223,7 @@ class UserController extends Controller
             User::findOrFail($id)->delete();
             return response()->json([], HttpResponse::HTTP_NO_CONTENT);
         } catch (\Exception $e) {
-            return response()->json(['message' => $e->getMessage()], 401);
+            return response()->json(['error' => $e->getMessage()], 401);
         }
     }
 }
