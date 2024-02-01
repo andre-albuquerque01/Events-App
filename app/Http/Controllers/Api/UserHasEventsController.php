@@ -50,6 +50,10 @@ class UserHasEventsController extends Controller
                 throw new \Exception("Usuário não encontrado");
             }
 
+            if (UserHasEvents::where('idUser', '=', $user->idUser)->where('idEvents', '=', $request->idEvent)->exists()) {
+                throw new \Exception("Usuário já participando do evento");
+            }
+
             UserHasEvents::create($data);
             return response()->json([['message' => 'sucess']], 200);
         } catch (\Exception $e) {
