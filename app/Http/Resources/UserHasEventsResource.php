@@ -17,6 +17,7 @@ class UserHasEventsResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            'idHasEvents' => $this->idUser_has_events, 
             'id' => $this->idEvents,
             'title' => $this->title,
             'price' => $this->price,

@@ -51,7 +51,7 @@ class UserHasEventsController extends Controller
             }
 
             if (UserHasEvents::where('idUser', $user->idUser)->where('idEvents', $request->idEvent)->exists()) {
-                return response()->json(['error' => 'Erro, já participando do mesmo evento'], 400);
+                return response()->json(['message' => 'Erro, já participando do mesmo evento'], 400);
             }
             UserHasEvents::create($data);
             return response()->json(['message' => 'Cadastro realizado com sucesso'], 200);

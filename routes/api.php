@@ -21,8 +21,9 @@ Route::apiResource("/events", EventsController::class);
 Route::get("/eventsTitle/{title}",  [EventsController::class, "showTitle"]);
 Route::get("/hasEvents",  [UserHasEventsController::class, "showUserEvents"]);
 Route::post("/hasEvents",  [UserHasEventsController::class, "store"]);
+Route::delete("/hasEvents/{id}",  [UserHasEventsController::class, "destroy"]);
 
-// Route::apiResource("/hasEvents", UsesrHasEventsController::class);
+// Route::apiResource("/hasEvents", UserHasEventsController::class);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post("/events/{id}", [EventsController::class, "update"]);
     Route::delete("/delete/events/{id}", [EventsController::class, "destroy"]);
