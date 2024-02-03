@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("/auth",  [AuthController::class, "login"]);
 Route::apiResource("/user", UserController::class);
-Route::get("/verifyEmail/{email}",  [UserController::class, "verifyEmail"]);
+Route::get("/   /{email}",  [UserController::class, "verifyEmail"]);
 Route::post("/reSendToken",  [UserController::class, "reSendToken"]);
 
 Route::post("/sendTokenRecoverPassword",  [UserController::class, "sendTokenRecoverPassword"]);
