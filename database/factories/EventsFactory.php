@@ -18,8 +18,8 @@ class EventsFactory extends Factory
      */
     public function definition(): array
     {
-        $ids = File::pluck('id');
-        $randomId = $ids[array_rand($ids)];
+        // $ids = File::pluck('idFile');
+        // $randomId = $ids[array_rand($ids)];
         return [
             'title' => fake()->name(),
             'description' => fake()->text(50),
