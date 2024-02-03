@@ -20,7 +20,7 @@ class UserHasEventsController extends Controller
     public function __construct(SaveFile $saveFile)
     {
         $this->saveFile = $saveFile;
-        $this->middleware('auth:sanctum')->only('showUserEvents', 'store', 'show', 'update', 'destroy', 'showEventsUser');
+        // $this->middleware('auth:sanctum')->only('showUserEvents', 'store', 'show', 'update', 'destroy', 'showEventsUser');
     }
     /**
      * Display a listing of the resource.
