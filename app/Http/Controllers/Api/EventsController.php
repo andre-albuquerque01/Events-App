@@ -27,7 +27,7 @@ class EventsController extends Controller
     public function index()
     {
         try {
-            $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->paginate();
+            $events = Events::join('files', 'files.idFile', '=', 'events.idFile')->where('statusEvent', '=', 1)->paginate();
             return EventsResource::collection($events);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 404);
