@@ -66,7 +66,7 @@ class UserHasEventsController extends Controller
                 return response()->json(['message' => 'Erro, já participando do mesmo evento'], 400);
             }
 
-            $ret = UserHasEvents::join('events as e', 'e.idEvents', '=', 'user_has_events.idEvents')->where('user_has_events.idEvents', $request->idEvents)->first();
+            $ret = Events::where('idEvents', $request->idEvents)->first();
 
             $upOcupp = Events::where('idEvents', '=', $request->idEvents)->where('occupation', '>', 0)->update(
                 [
