@@ -50,32 +50,34 @@ class UserHasEventsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreUserHasEventRequest $request)
+    public function store(Request $request)
     {
         try {
             $user = Auth::user();
-            $data = $request->validated();
             $data['idUser'] = $user->idUser;
+            $data['idEvents'] = $request->idEvents;
 
             $userExists = User::find($user->idUser);
             if (!$userExists) {
                 throw new \Exception("Usuário não encontrado");
             }
 
-            if (UserHasEvents::where('idUser', $user->idUser)->where('idEvents', $request->idEvent)->exists()) {
+            if (UserHasEvents::where('idUser', $user->idUser)->where('idEvents', $request->idEvents)->exists()) {
                 return response()->json(['message' => 'Erro, já participando do mesmo evento'], 400);
             }
 
-            $upOcupp = Events::where('idEvents', $request->idEvent)->where('occupation', '>', 0)->update(
+            $ret = UserHasEvents::join('events as e', 'e.idEvents', '=', 'user_has_events.idEvents')->where('user_has_events.idEvents', $request->idEvents)->first();
+
+            $upOcupp = Events::where('idEvents', '=', $request->idEvents)->where('occupation', '>', 0)->update(
                 [
-                    'occupation' => -1,
+                    'occupation' => $ret->occupation - 1,
                 ]
             );
 
-            if ($upOcupp){
+            if ($upOcupp) {
                 UserHasEvents::create($data);
                 return response()->json(['message' => 'Cadastro realizado com sucesso'], 200);
-            }else{
+            } else {
                 return response()->json(['message' => 'Evento com o máximo de ocupação'], 400);
             }
         } catch (\Exception $e) {
