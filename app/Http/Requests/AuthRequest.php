@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserHasEventRequest extends FormRequest
+class AuthRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,17 +21,9 @@ class StoreUserHasEventRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
-            "idEvents" => "required",
+        return [
+            'email' => 'required|email',
+            'password' => 'required|string',
         ];
-
-        if ($this->method() == "PATCH" || $this->method() == "PUT") {
-            $rules["idEvents"] = "required";
-            $rules["qtdTicket"] = "nullable";
-            $rules["statusPay"] = "nullable";
-            $rules["numberPix"] = "nullable";
-            $rules["pathName"] = "nullable";
-        }
-        return $rules;
     }
 }
