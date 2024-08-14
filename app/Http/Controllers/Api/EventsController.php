@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\CheckAdminToken;
 use App\Http\Requests\StoreEventsRequest;
-use App\Services\EventsService;
+use App\Service\EventsService;
 use Illuminate\Http\Request;
 
 class EventsController extends Controller

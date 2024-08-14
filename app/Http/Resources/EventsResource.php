@@ -16,7 +16,7 @@ class EventsResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->idEvents,
+            'idEvents' => $this->idEvents,
             'title' => $this->title,
             'price' => $this->price,
             'description' => $this->description,
@@ -27,7 +27,7 @@ class EventsResource extends JsonResource
             'timeEvent' => $this->timeEvent,
             'statusEvent' => $this->statusEvent,
             'pathName' => $this->pathName,
-            'created' => Carbon::make($this->created_at)->format('Y-m-d H:i:s'),
+            'updated' => Carbon::make($this->updated_at)->format('Y-m-d H:i:s'),
         ];
     }
 }

@@ -14,12 +14,15 @@ class RecoverPasswordEmailEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $email, $token;
+
     /**
      * Create a new event instance.
      */
-    public function __construct(public string $email, public string $token)
+    public function __construct(string $email, string $token)
     {
-        //
+        $this->email = $email;
+        $this->token = $token;
     }
 
     /**

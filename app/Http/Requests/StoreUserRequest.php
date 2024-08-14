@@ -24,6 +24,7 @@ class StoreUserRequest extends FormRequest
     {
         $rules = [
             "name" => "required|min:3|max:255",
+            "term_aceite" => "required|boolean",
             "email" => [
                 "required",
                 "email",
@@ -74,6 +75,9 @@ class StoreUserRequest extends FormRequest
                 ->uncompromised(),
             ];
             $rules["password_confirmation"] = [
+                'nullable',
+            ];
+            $rules["term_aceite"] = [
                 'nullable',
             ];
             $rules["cpf"] = [
