@@ -3,13 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserHasEventRequest;
-use App\Http\Resources\UserHasEventsResource;
-use App\Http\Resources\UserIsEventsResource;
-use App\Http\Services\SaveFile;
-use App\Models\Events;
-use App\Models\User;
-use App\Models\UserHasEvents;
 use App\Service\UserHasEventsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
