@@ -13,13 +13,13 @@ use Illuminate\Queue\SerializesModels;
 class VerifyEmailEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
+    public string $email;
     /**
      * Create a new event instance.
      */
-    public function __construct(public string $email)
+    public function __construct(string $email)
     {
-        //
+        $this->email = $email;
     }
 
     /**
