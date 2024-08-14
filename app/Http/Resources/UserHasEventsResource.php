@@ -18,12 +18,9 @@ class UserHasEventsResource extends JsonResource
         // return parent::toArray($request);
         return [
             'idHasEvents' => $this->idUser_has_events, 
-            'id' => $this->idEvents,
-            'title' => $this->title,
-            'price' => $this->price,
-            'statusEvent' => $this->statusEvent,
-            'pathName' => $this->pathName,
-            'created' => Carbon::make($this->created_at)->format('Y-m-d H:i:s'),
+            'event' => new EventsResource($this->whenLoaded('events')),
+            'users' => new UserResource($this->whenLoaded('user')),
+            'created' => Carbon::make($this->updated_at)->format('Y-m-d H:i:s'),
         ];
     }
 }
