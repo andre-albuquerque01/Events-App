@@ -11,6 +11,7 @@ Para operar a API do sistema, são necessários os seguintes requisitos mínimos
 O sistema utiliza as seguintes linguagens:
 
 - PHP
+- TypeScript
 
 Banco de dados:
 
@@ -19,6 +20,7 @@ Banco de dados:
 Frameworks:
 
 - Laravel
+- Next.js
 
 Arquitetura da API:
 
@@ -27,6 +29,7 @@ Arquitetura da API:
 
 Além disso, faz uso de:
 
+- React
 - Docker
 
 ## Como Iniciar o Sistema
@@ -36,55 +39,10 @@ Além disso, faz uso de:
 Clone o repositório:
 
 ```bash
-git clone https://github.com/andre-albuquerque01/Events-App.git
+https://github.com/andre-albuquerque01/Events-App-front.git
 ```
 
-### Passo 2: Configuração do Back-end
-
-Entre na pasta back-end:
-
-```bash
-cd /literate-octo-potato/back-end
-```
-
-Inicialize os pacotes do Laravel:
-
-```php
-composer install
-```
-
-Crie um arquivo `.env` na raiz do seu projeto e configure as variáveis de ambiente conforme necessário.
-Execute `php artisan config:cache` para aplicar as configurações do arquivo `.env`.
-
-Inicie o servidor da API:
-
-```bash
-./vendor/bin/sail up
-```
-
-No Linux:
-
-```bash
-sudo ./vendor/bin/sail up
-```
-
-Para desativar o servidor da API:
-
-```bash
-./vendor/bin/sail down
-```
-
-No Linux:
-
-```bash
-sudo ./vendor/bin/sail down
-```
-
-### Passo 3: Acesso a API
-
-Abra o postman ou algum app semelhante ao postman e acesse `http://localhost` para utilizar o serviço.
-
-### Passo 4: Configuração do Front-end
+### Passo 2: Configuração do Front-end
 
 Entre na pasta e baixe as dependências do Node.js:
 
@@ -98,6 +56,6 @@ Inicie o servidor do Next.js:
 npm run dev
 ```
 
-### Passo 5: Acesso a interface
+### Passo 3: Acesso ao Sistema
 
 Abra o navegador e acesse `http://localhost:3000` para utilizar o serviço.

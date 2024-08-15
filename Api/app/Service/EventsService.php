@@ -46,7 +46,7 @@ class EventsService
     {
         try {
             $events = Events::where('title', 'LIKE', '%' . $title . '%')->get();
-            return new EventsTitleResource($events);
+            return new EventsResource($events);
         } catch (\Exception $e) {
             throw new GeneralExceptionCatch('Error, store', 400);
         }
