@@ -20,13 +20,8 @@ export async function InsertUserEvents(requestBody: object) {
     if (data.message === 'Error, participando do mesmo evento') {
       return 'Já está participando desse evento'
     }
-    if (data.message !== undefined) {
-      console.error(
-        new Response(JSON.stringify({ error: 'Error', status: 400 }), {
-          status: 400,
-        }),
-      )
-    }
+    console.log(data)
+
     revalidateTag('userEvents')
     return data.data
   } catch (error) {
