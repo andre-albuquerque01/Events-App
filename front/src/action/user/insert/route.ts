@@ -2,7 +2,6 @@
 
 import ApiServer from '@/data/api'
 import { revalidateTag } from 'next/cache'
-import { redirect } from 'next/navigation'
 
 export async function InsertUser(requestBody: object) {
   try {
@@ -49,9 +48,10 @@ export async function InsertUser(requestBody: object) {
       )
     )
       return 'Senha fraca.'
+
+    revalidateTag('user')
+    return `true`
   } catch (error) {
-    console.log('Erro ao analisar JSON:', error)
+    return 'Error ao inserir os dados'
   }
-  revalidateTag('user')
-  redirect('/login')
 }
