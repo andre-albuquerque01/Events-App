@@ -47,7 +47,7 @@ export async function Login(body: object) {
       httpOnly: true,
       sameSite: 'strict',
     })
-    cookiesStore.set('id', data.data.id, {
+    cookiesStore.set('id', data.data.idUser, {
       expires: Date.now() + 2 * 60 * 60 * 1000,
       secure: true,
       httpOnly: true,
