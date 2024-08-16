@@ -16,11 +16,7 @@ export async function InsertEvent(requestBody: object) {
     })
 
     const data = await response.json()
-    if (data.error !== undefined) {
-      return new Response(JSON.stringify({ error: 'Error', status: 400 }), {
-        status: 400,
-      })
-    }
+
     revalidateTag('events')
     return data.data
   } catch (error) {
