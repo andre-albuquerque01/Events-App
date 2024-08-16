@@ -1,6 +1,7 @@
 'use server'
 import ApiServer from '@/data/api'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export async function Logout() {
   try {
@@ -25,9 +26,8 @@ export async function Logout() {
     cookiesStore.delete('id')
     cookiesStore.delete('token')
     cookiesStore.delete('r')
-
-    return data.data
   } catch (error) {
     console.log('Erro ao analisar JSON:', error)
   }
+  redirect('/login')
 }
