@@ -12,7 +12,7 @@ export async function GetUser() {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token?.value}`,
-        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
       next: {
         revalidate: 60 * 30,
