@@ -15,7 +15,7 @@ class UserHasEventsService
     {
         try {
             $user = auth()->user();
-            $event = UserHasEvents::with(['events'])->where('user_has_events.idUser', '=', $user->idUser)->paginate();
+            $event = UserHasEvents::with(['events'])->where('user_has_events.idUser', '=', $user->idUser)->get();
             return UserHasEventsResource::collection($event);
         } catch (\Exception $e) {
             throw new GeneralExceptionCatch('Error, showUserEvents', 400);
