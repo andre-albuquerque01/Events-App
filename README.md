@@ -41,7 +41,7 @@ git clone https://github.com/andre-albuquerque01/Events-App.git
 
 ### Passo 2: Configuração do Back-end
 
-Entre na pasta back-end:
+Entre na pasta Api:
 
 ```bash
 cd /Api
