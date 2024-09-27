@@ -36,7 +36,7 @@ Além disso, faz uso de:
 Clone o repositório:
 
 ```bash
-git clone https://github.com/andre-albuquerque01/literate-octo-potato.git
+git clone https://github.com/andre-albuquerque01/Events-App.git
 ```
 
 ### Passo 2: Configuração do Back-end
@@ -44,7 +44,7 @@ git clone https://github.com/andre-albuquerque01/literate-octo-potato.git
 Entre na pasta back-end:
 
 ```bash
-cd /literate-octo-potato/back-end
+cd /Api
 ```
 
 Inicialize os pacotes do Laravel:
