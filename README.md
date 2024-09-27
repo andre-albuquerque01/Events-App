@@ -44,7 +44,7 @@ git clone https://github.com/andre-albuquerque01/Events-App.git
 Entre na pasta back-end:
 
 ```bash
-cd /literate-octo-potato/back-end
+cd /Api
 ```
 
 Inicialize os pacotes do Laravel:
