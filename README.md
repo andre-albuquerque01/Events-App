@@ -59,22 +59,10 @@ Execute `php artisan config:cache` para aplicar as configurações do arquivo `.
 Inicie o servidor da API:
 
 ```bash
-./vendor/bin/sail up
-```
-
-No Linux:
-
-```bash
 sudo ./vendor/bin/sail up
 ```
 
 Para desativar o servidor da API:
-
-```bash
-./vendor/bin/sail down
-```
-
-No Linux:
 
 ```bash
 sudo ./vendor/bin/sail down
