@@ -39,8 +39,6 @@ Informações: permitir que o usuário (Administrador) da aplicação gerencie e
 
 O sistema utiliza as seguintes linguagens:
 
-O sistema utiliza as seguintes tecnologias:
-
 - **Linguagens:** PHP, TypeScript
 - **Banco de Dados:** MySQL
 - **Frameworks:** Laravel, Next.js
